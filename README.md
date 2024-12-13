@@ -28,19 +28,19 @@ pip install -r requirements.txt
 4. **Run the tool**
 After editing the `places.txt` file, use the following command to plan your trip: 
 ```
-python main.py --api_key {YOUR_API_KEY} --place_names places.txt --max_distance_per_day {MAXIMUM_DISTANCE_PER_DAY} --penalty {PLACE_PENALTY} --num_days {TRAVEL_DAYS}
+python main.py --api_key {YOUR_API_KEY} --place_names places.txt --max_distance_per_day {MAXIMUM_DISTANCE_PER_DAY} ----max_place_number {MAXIMUM_PLACE_NUM} --num_days {TRAVEL_DAYS}
 ```
 Parameter Details:
 
 - `YOUR_API_KEY` is the OpenRouteService API key you obtained
 - `MAXIMUM_DISTANCE_PER_DAY` is the maximum distance you want to travel per day
 -  `TRAVEL_DAYS` is the number of days for traveling.
-- A larger `PLACE_PENALTY` decreases the number of places you visit every day -- feel free to adjust this value for your preferences!
+- `MAXIMUM_PLACE_NUM` is the maximum number of places you want to visit per day
 
 ### Example workflow
 
 ```
-python main.py --api_key abc123 --place_names places.txt --max_distance_per_day 50 --penalty 10 --num_days 3
+python main.py --api_key abc123 --place_names places.txt --max_distance_per_day 24 --max_place_number 2 --num_days 4
 ```
 
 ### Note
