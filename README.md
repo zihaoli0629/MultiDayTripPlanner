@@ -1,23 +1,23 @@
 ## Multi-Day Trip Planner: A Lightweight TSP-Based Tool ✈️✈️✈️
 
-Hi there👋! This is a lightweight package helps you plan and visualize **a multi-day trip** using standard [TSP](https://en.wikipedia.org/wiki/Travelling_salesman_problem) techniques. 
+Hi there👋! This is a lightweight package that helps you plan and visualize **a multi-day trip** using standard [TSP](https://en.wikipedia.org/wiki/Travelling_salesman_problem) techniques. 
 ### Getting started
 1. **Obtain an API key**
    
 - To get started, you'll need an API key of OpenRouteService. This key will allow you to access the spherical coordinates of your destinations.
-Check out [their website](https://openrouteservice.org/dev/#/api-docs/v2/directions/%7Bprofile%7D/get) and click ''API Key'' at the top right Zone of **User Security**. The process should be fast and easy!
+Check out [their website](https://openrouteservice.org/dev/#/api-docs/v2/directions/%7Bprofile%7D/get) and click ''API Key'' at the top right corner of **User Security**. The process should be fast and easy!
 
 2. **Edit places.tx**
 
-  - Update the places.txt file file to include your planned destinations.
+  - Update the places.txt file to include your planned destinations.
   - The first line should be the name of your hotel.
   - Every line afterward should be your place of interest. The order can be random.
-  - We recomment all inputs to be formatted as `Name, city, country`. Here is an example: 
+  - We recommend all inputs to be formatted as `Name, city, country`. Here is an example: 
 
 ```
 Andaz Tokyo Toranomon Hill, Minato City, Tokyo, Japan
-Akihabara, Taito City, Tokyo
-Ginza, Tokyo
+Akihabara, Taito City, Tokyo, Japan
+Ginza, Tokyo, Japan
 ....
 ```
 3. **Install dependencies**
@@ -36,7 +36,7 @@ Parameter Details:
 - `MAXIMUM_DISTANCE_PER_DAY` is the maximum distance you want to travel per day
 - `TRAVEL_DAYS` is the number of days for traveling
 - `MAXIMUM_PLACE_NUM` is the maximum number of places you want to visit per day
-- `SAVE` means whether the save the route map or not. Default True
+- `SAVE` means whether to save the route map or not. Default True
 - `YOUR_PATH` is your path for saving the map. Default "./plan"
 ### Example workflow
 
