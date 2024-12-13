@@ -1,6 +1,6 @@
 ## Multi-Day Trip Planner: A Lightweight TSP-Based Tool ✈️✈️✈️
 
-Hi there👋! This is a lightweight package helps you plan **a multi-day trip** using standard [TSP](https://en.wikipedia.org/wiki/Travelling_salesman_problem) techniques. 
+Hi there👋! This is a lightweight package helps you plan and visualize **a multi-day trip** using standard [TSP](https://en.wikipedia.org/wiki/Travelling_salesman_problem) techniques. 
 ### Getting started
 1. **Obtain an API key**
    
@@ -28,19 +28,20 @@ pip install -r requirements.txt
 4. **Run the tool**
 After editing the `places.txt` file, use the following command to plan your trip: 
 ```
-python main.py --api_key {YOUR_API_KEY} --place_names places.txt --max_distance_per_day {MAXIMUM_DISTANCE_PER_DAY} ----max_place_number {MAXIMUM_PLACE_NUM} --num_days {TRAVEL_DAYS}
+python main.py --api_key {YOUR_API_KEY} --place_names places.txt --max_distance_per_day {MAXIMUM_DISTANCE_PER_DAY} ----max_place_number {MAXIMUM_PLACE_NUM} --num_days {TRAVEL_DAYS} --save_map {SAVE} --save_path {YOUR_PATH}
 ```
 Parameter Details:
 
 - `YOUR_API_KEY` is the OpenRouteService API key you obtained
 - `MAXIMUM_DISTANCE_PER_DAY` is the maximum distance you want to travel per day
-- `TRAVEL_DAYS` is the number of days for traveling.
+- `TRAVEL_DAYS` is the number of days for traveling
 - `MAXIMUM_PLACE_NUM` is the maximum number of places you want to visit per day
-
+- `SAVE` means whether the save the route map or not. Default True
+- `YOUR_PATH` is your path for saving the map. Default "./plan"
 ### Example workflow
 
 ```
-python main.py --api_key abc123 --place_names places.txt --max_distance_per_day 24 --max_place_number 2 --num_days 4
+python main.py --api_key abc123 --place_names places.txt --max_distance_per_day 24 --max_place_number 2 --num_days 4  --save_path "./plan"
 ```
 
 ### Note

@@ -22,7 +22,7 @@ def fetch_coordinates(place_names: List[str], api_key: str, client) -> dict:
             geocode = client.pelias_search(text=place)
             lat = geocode['features'][0]['geometry']['coordinates'][1]
             lon = geocode['features'][0]['geometry']['coordinates'][0]
-            coordinates[place] = (lat, lon)
+            coordinates[place.split(",")[0]] = (lat, lon)
         except Exception as e:
             raise ValueError(f"Failed to fetch coordinates for {place}: {e}")
     print("\nHere are the coordinates:\n")
@@ -67,7 +67,7 @@ def create_distance_matrix(coordinates,places):
     for i in range(n):
         for j in range(n):
             if i != j:
-                distance_matrix[i][j] = haversine_distance(coordinates[places[i]], coordinates[places[j]]) 
+                distance_matrix[i][j] = haversine_distance(coordinates[places[i].split(",")[0]], coordinates[places[j].split(",")[0]]) 
     print("\n Check the distance matrix in kilometers:\n")
     print([place.split(",")[0] for place in places])
     for row in distance_matrix:
@@ -87,7 +87,7 @@ def create_data_model(places, num_days, max_distance_per_day, max_place_number, 
     data['num_days'] = num_days
     data['max_distance_per_day'] = max_distance_per_day
     data['max_place_number'] = max_place_number
-    return data
+    return data, coordinates
 
 def solve_itinerary(data: dict, places: list, scale_factor = 10):
     """Solves the multi-day trip planning problem."""
@@ -170,31 +170,3 @@ def parse_solution(manager, routing, solution, num_days, places):
     return routes
 
 
-if __name__ == "__main__":
-    api_key = "5b3ce3597851110001cf624893733cf4b16643ba8a02e4e0ac7fbdec"
-    place_names = ["Shinjuku, Tokyo",
-                    "Akihabara, Taito City, Tokyo", 
-                    "Ginza, Tokyo", 
-                    "Imperial place, Chiyoda City, Tokyo, Japan",
-                    "Meiji Jingu, Shibuya, Tokyo, Japan",
-                    "Tokyo national museum, Tokyo, Japan",
-                    "sensoji temple, Tokyo, Japan"
-                    ]
-    num_days = 4 # Specify the number of depots = days
-    max_distance_per_day = 30 # total budget 
-    max_place_number = 4
-    # penalize multiple visits on the same day
-    try:
-        data = create_data_model(place_names, num_days, max_distance_per_day, max_place_number, api_key)
-        solution = solve_itinerary(data, place_names)
-        if solution:
-            for day, sol in enumerate(solution):
-                route, route_index = sol[0], sol[1]
-                print(f"Day {day + 1}: {' -> '.join(map(str, route))}")
-                dist = 0
-                for i in range(len(route) - 1):
-                    dist += data['distance_matrix'][route_index[i]][route_index[i+1]]
-                print(f"Total distance for day {day+1} is {dist:.2f} km \n")
-
-    except Exception as e:
-        print(f"Error: {e}")

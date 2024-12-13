@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_c4591d4bdad9d002e123613c0b151af8 {
+                #map_47d4cfc493539e23895802d7d8044f14 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -35,20 +35,21 @@
                 .leaflet-container { font-size: 1rem; }
             </style>
         
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-textpath@1.2.3/leaflet.textpath.min.js"></script>
 </head>
 <body>
     
     
-            <div class="folium-map" id="map_c4591d4bdad9d002e123613c0b151af8" ></div>
+            <div class="folium-map" id="map_47d4cfc493539e23895802d7d8044f14" ></div>
         
 </body>
 <script>
     
     
-            var map_c4591d4bdad9d002e123613c0b151af8 = L.map(
-                "map_c4591d4bdad9d002e123613c0b151af8",
+            var map_47d4cfc493539e23895802d7d8044f14 = L.map(
+                "map_47d4cfc493539e23895802d7d8044f14",
                 {
-                    center: [35.6895, 139.6917],
+                    center: [35.6895, 139.69171],
                     crs: L.CRS.EPSG3857,
                     ...{
   "maxBounds": null,
@@ -64,7 +65,7 @@
 
         
     
-            var tile_layer_d07d00f63bb1d8547e529069952a365b = L.tileLayer(
+            var tile_layer_9d36a1c4b4cefbfd70a253b1f64cc635 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -81,19 +82,19 @@
             );
         
     
-            tile_layer_d07d00f63bb1d8547e529069952a365b.addTo(map_c4591d4bdad9d002e123613c0b151af8);
+            tile_layer_9d36a1c4b4cefbfd70a253b1f64cc635.addTo(map_47d4cfc493539e23895802d7d8044f14);
         
     
-            var marker_01ac8aaccc46a2c53cfb25b8ceb24c7c = L.marker(
-                [35.6895, 139.6917],
+            var marker_c30f9ec379b2beed2e89fd98dc53eb5c = L.marker(
+                [35.6895, 139.69171],
                 {
   "draggable": null,
   "autoPan": null,
 }
-            ).addTo(map_c4591d4bdad9d002e123613c0b151af8);
+            ).addTo(map_47d4cfc493539e23895802d7d8044f14);
         
     
-        var popup_fc55d0d37bdaf6e711212741baac34bc = L.popup({
+        var popup_4ff5589fc87e80a26910d9bc314deb37 = L.popup({
   "maxWidth": "100%",
   "autoClose": null,
   "closeOnClick": null,
@@ -101,27 +102,27 @@
 
         
             
-                var html_e344536da55d4b3ea49863902efc7254 = $(`<div id="html_e344536da55d4b3ea49863902efc7254" style="width: 100.0%; height: 100.0%;">Hotel</div>`)[0];
-                popup_fc55d0d37bdaf6e711212741baac34bc.setContent(html_e344536da55d4b3ea49863902efc7254);
+                var html_647366bd33dabae5485b6344c60b22b5 = $(`<div id="html_647366bd33dabae5485b6344c60b22b5" style="width: 100.0%; height: 100.0%;">Andaz Tokyo Toranomon Hill</div>`)[0];
+                popup_4ff5589fc87e80a26910d9bc314deb37.setContent(html_647366bd33dabae5485b6344c60b22b5);
             
         
 
-        marker_01ac8aaccc46a2c53cfb25b8ceb24c7c.bindPopup(popup_fc55d0d37bdaf6e711212741baac34bc)
+        marker_c30f9ec379b2beed2e89fd98dc53eb5c.bindPopup(popup_4ff5589fc87e80a26910d9bc314deb37)
         ;
 
         
     
     
-            var marker_4e619011620083db7b1b48bf29387e99 = L.marker(
-                [35.6938, 139.7034],
+            var marker_d8030431b578a84cdbbfd4d5b876c0a4 = L.marker(
+                [35.6895, 139.69171],
                 {
   "draggable": null,
   "autoPan": null,
 }
-            ).addTo(map_c4591d4bdad9d002e123613c0b151af8);
+            ).addTo(map_47d4cfc493539e23895802d7d8044f14);
         
     
-        var popup_6071f2363f9c1ae9b819d8121abce151 = L.popup({
+        var popup_6747880c49f93e6ecbbf78eef77981d7 = L.popup({
   "maxWidth": "100%",
   "autoClose": null,
   "closeOnClick": null,
@@ -129,89 +130,37 @@
 
         
             
-                var html_78e4f73719a6d345e51f49abe0abf231 = $(`<div id="html_78e4f73719a6d345e51f49abe0abf231" style="width: 100.0%; height: 100.0%;">Shinjuku</div>`)[0];
-                popup_6071f2363f9c1ae9b819d8121abce151.setContent(html_78e4f73719a6d345e51f49abe0abf231);
+                var html_cad942b86ed0065b21557b98b57c1dbe = $(`<div id="html_cad942b86ed0065b21557b98b57c1dbe" style="width: 100.0%; height: 100.0%;">Andaz Tokyo Toranomon Hill</div>`)[0];
+                popup_6747880c49f93e6ecbbf78eef77981d7.setContent(html_cad942b86ed0065b21557b98b57c1dbe);
             
         
 
-        marker_4e619011620083db7b1b48bf29387e99.bindPopup(popup_6071f2363f9c1ae9b819d8121abce151)
+        marker_d8030431b578a84cdbbfd4d5b876c0a4.bindPopup(popup_6747880c49f93e6ecbbf78eef77981d7)
         ;
 
         
     
     
-            var marker_7c0d8f2923f65d3c0af94ec024d3bbd1 = L.marker(
-                [35.7023, 139.7745],
+            var poly_line_80346752021f0bf63f0846de296c44bb = L.polyline(
+                [[35.6895, 139.69171], [35.6895, 139.69171]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 1.5}
+            ).addTo(map_47d4cfc493539e23895802d7d8044f14);
+        
+    
+            poly_line_80346752021f0bf63f0846de296c44bb.setText(
+                "\u2192",
                 {
-  "draggable": null,
-  "autoPan": null,
+  "repeat": true,
+  "center": false,
+  "below": false,
+  "offset": 10,
+  "orientation": 0,
+  "attributes": {
+  "font-size": "30px",
+  "fill": "blue",
+},
 }
-            ).addTo(map_c4591d4bdad9d002e123613c0b151af8);
-        
-    
-        var popup_6f4cbab8c3aa9e4daead5d3a66fbefbb = L.popup({
-  "maxWidth": "100%",
-  "autoClose": null,
-  "closeOnClick": null,
-});
-
-        
-            
-                var html_b91fd65b37ad2abc739fd44ea89c0a07 = $(`<div id="html_b91fd65b37ad2abc739fd44ea89c0a07" style="width: 100.0%; height: 100.0%;">Akihabara</div>`)[0];
-                popup_6f4cbab8c3aa9e4daead5d3a66fbefbb.setContent(html_b91fd65b37ad2abc739fd44ea89c0a07);
-            
-        
-
-        marker_7c0d8f2923f65d3c0af94ec024d3bbd1.bindPopup(popup_6f4cbab8c3aa9e4daead5d3a66fbefbb)
-        ;
-
-        
-    
-    
-            var marker_93aaac955e7914682055b29d6a867a46 = L.marker(
-                [35.6895, 139.6917],
-                {
-  "draggable": null,
-  "autoPan": null,
-}
-            ).addTo(map_c4591d4bdad9d002e123613c0b151af8);
-        
-    
-        var popup_cff3f4a6ab2feb215939f2b7da84fb77 = L.popup({
-  "maxWidth": "100%",
-  "autoClose": null,
-  "closeOnClick": null,
-});
-
-        
-            
-                var html_b01882475206fc7e43ddd3014a169886 = $(`<div id="html_b01882475206fc7e43ddd3014a169886" style="width: 100.0%; height: 100.0%;">Hotel</div>`)[0];
-                popup_cff3f4a6ab2feb215939f2b7da84fb77.setContent(html_b01882475206fc7e43ddd3014a169886);
-            
-        
-
-        marker_93aaac955e7914682055b29d6a867a46.bindPopup(popup_cff3f4a6ab2feb215939f2b7da84fb77)
-        ;
-
-        
-    
-    
-            var poly_line_9ef3df9b92239d2d181e4ae520703ea6 = L.polyline(
-                [[35.6895, 139.6917], [35.6938, 139.7034]],
-                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
-            ).addTo(map_c4591d4bdad9d002e123613c0b151af8);
-        
-    
-            var poly_line_e41529891cf688f7435a9d6fd85236ae = L.polyline(
-                [[35.6938, 139.7034], [35.7023, 139.7745]],
-                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
-            ).addTo(map_c4591d4bdad9d002e123613c0b151af8);
-        
-    
-            var poly_line_dc92b07e32702adfefac85cbeed0efe3 = L.polyline(
-                [[35.7023, 139.7745], [35.6895, 139.6917]],
-                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
-            ).addTo(map_c4591d4bdad9d002e123613c0b151af8);
+            );
         
 </script>
 </html>
