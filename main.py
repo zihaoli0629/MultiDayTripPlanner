@@ -39,7 +39,9 @@ def main():
     max_place_number = args.max_place_number + 1 # include hotel
     num_days = args.num_days
     place_names = read_place_names(place_names_file)
+    save_map = args.save_map
     path = args.save_path
+    
 
     try:
         data, coordinates = create_data_model(place_names, num_days, max_distance_per_day, max_place_number, api_key)
@@ -53,7 +55,8 @@ def main():
                     dist += data['distance_matrix'][route_index[i]][route_index[i+1]]
                 print(f"Total distance for day {day+1} is {dist:.2f} km \n")
             routes = [sol[0] for sol in solution]
-            visualize_routes(routes, coordinates, output_folder=path)
+            if save_map:
+                visualize_routes(routes, coordinates, output_folder=path)
     except Exception as e:
         print(f"Error: {e}")
 

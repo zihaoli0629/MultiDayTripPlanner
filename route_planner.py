@@ -5,7 +5,7 @@ from ortools.constraint_solver.routing_enums_pb2 import FirstSolutionStrategy
 from typing import List
 from math import radians, sin, cos, sqrt, atan2
 
-def fetch_coordinates(place_names: List[str], api_key: str, client) -> dict:
+def fetch_coordinates(place_names: List[str], api_key: str, client, debug=False) -> dict:
     """
     Fetch latitude and longitude coordinates for a list of place names using OpenRouteService.
     
@@ -25,9 +25,10 @@ def fetch_coordinates(place_names: List[str], api_key: str, client) -> dict:
             coordinates[place.split(",")[0]] = (lat, lon)
         except Exception as e:
             raise ValueError(f"Failed to fetch coordinates for {place}: {e}")
-    print("\nHere are the coordinates:\n")
-    for name in coordinates:
-        print(name, ", \n", coordinates[name])
+    if debug:
+        print("\nHere are the coordinates:\n")
+        for name in coordinates:
+            print(name, ", \n", coordinates[name])
     return coordinates
 
 def haversine_distance(coord1, coord2):
@@ -56,7 +57,7 @@ def haversine_distance(coord1, coord2):
     distance = R * c
     return distance
 
-def create_distance_matrix(coordinates,places):
+def create_distance_matrix(coordinates,places, debug=False):
     """
     Create a distance matrix using the Haversine distance.
     :param coordinates: List of (longitude, latitude) tuples.
@@ -68,12 +69,13 @@ def create_distance_matrix(coordinates,places):
         for j in range(n):
             if i != j:
                 distance_matrix[i][j] = haversine_distance(coordinates[places[i].split(",")[0]], coordinates[places[j].split(",")[0]]) 
-    print("\n Check the distance matrix in kilometers:\n")
-    print([place.split(",")[0] for place in places])
-    for row in distance_matrix:
-        formated = [f"{dist :.2f}" for dist in row]
-        print("["+ ",  ".join(formated) + "]")
-    print("\n")
+    if debug:
+        print("\n Check the distance matrix in kilometers:\n")
+        print([place.split(",")[0] for place in places])
+        for row in distance_matrix:
+            formated = [f"{dist :.2f}" for dist in row]
+            print("["+ ",  ".join(formated) + "]")
+        print("\n")
     return distance_matrix
 
 

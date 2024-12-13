@@ -44,6 +44,25 @@ Parameter Details:
 $ python main.py --api_key abc123 --place_names places.txt --max_distance_per_day 24 --max_place_number 2 --num_days 4  --save_path "./plan"
 ```
 
+```
+Day 1: Andaz Tokyo Toranomon Hill -> Andaz Tokyo Toranomon Hill
+Total distance for day 1 is 0.00 km 
+
+Day 2: Andaz Tokyo Toranomon Hill -> Tokyo national museum -> Sensoji Temple -> Andaz Tokyo Toranomon Hill
+Total distance for day 2 is 23.88 km 
+
+Day 3: Andaz Tokyo Toranomon Hill -> Imperial place -> Akihabara -> Andaz Tokyo Toranomon Hill
+Total distance for day 3 is 20.29 km 
+
+Day 4: Andaz Tokyo Toranomon Hill -> Meiji Jingu -> Ginza -> Andaz Tokyo Toranomon Hill
+Total distance for day 4 is 17.14 km 
+
+Day 1 has been saved to ./plan/day_1_route.html
+Day 2 has been saved to ./plan/day_2_route.html
+Day 3 has been saved to ./plan/day_3_route.html
+Day 4 has been saved to ./plan/day_4_route.html
+```
+
 ### Note
 
 - Make sure to double-check your `places.txt` format for errors!
