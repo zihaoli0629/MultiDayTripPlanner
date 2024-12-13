@@ -23,12 +23,12 @@ Ginza, Tokyo, Japan
 3. **Install dependencies**
 - Run the following command to install the required packages: 
 ```
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 4. **Run the tool**
 After editing the `places.txt` file, use the following command to plan your trip: 
 ```
-python main.py --api_key {YOUR_API_KEY} --place_names places.txt --max_distance_per_day {MAXIMUM_DISTANCE_PER_DAY} ----max_place_number {MAXIMUM_PLACE_NUM} --num_days {TRAVEL_DAYS} --save_map {SAVE} --save_path {YOUR_PATH}
+$ python main.py --api_key {YOUR_API_KEY} --place_names places.txt --max_distance_per_day {MAXIMUM_DISTANCE_PER_DAY} ----max_place_number {MAXIMUM_PLACE_NUM} --num_days {TRAVEL_DAYS} --save_map {SAVE} --save_path {YOUR_PATH}
 ```
 Parameter Details:
 
@@ -41,7 +41,7 @@ Parameter Details:
 ### Example workflow
 
 ```
-python main.py --api_key abc123 --place_names places.txt --max_distance_per_day 24 --max_place_number 2 --num_days 4  --save_path "./plan"
+$ python main.py --api_key abc123 --place_names places.txt --max_distance_per_day 24 --max_place_number 2 --num_days 4  --save_path "./plan"
 ```
 
 ### Note
