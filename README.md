@@ -7,7 +7,7 @@ Hi there👋! This is a lightweight package that helps you plan and visualize **
 - To get started, you'll need an API key of OpenRouteService. This key will allow you to access the spherical coordinates of your destinations.
 Check out [their website](https://openrouteservice.org/dev/#/api-docs/v2/directions/%7Bprofile%7D/get) and click ''API Key'' at the top right corner of **User Security**. The process should be fast and easy!
 
-2. **Edit places.tx**
+2. **Edit places.txt**
 
   - Update the places.txt file to include your planned destinations.
   - The first line should be the name of your hotel.
