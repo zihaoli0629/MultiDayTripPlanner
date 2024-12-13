@@ -34,7 +34,7 @@ Parameter Details:
 
 - `YOUR_API_KEY` is the OpenRouteService API key you obtained
 - `MAXIMUM_DISTANCE_PER_DAY` is the maximum distance you want to travel per day
--  `TRAVEL_DAYS` is the number of days for traveling.
+- `TRAVEL_DAYS` is the number of days for traveling.
 - `MAXIMUM_PLACE_NUM` is the maximum number of places you want to visit per day
 
 ### Example workflow
@@ -46,8 +46,9 @@ python main.py --api_key abc123 --place_names places.txt --max_distance_per_day 
 ### Note
 
 - Make sure to double-check your `places.txt` format for errors!
-- Experiment with the `PLACE_PENALTY` value to balance your daily plans.
-
+- If the program can not find a solution, you can either:
+1. Be more energetic by tuning up the `max_distance_per_day` and `max_place_number` 🏃‍♀️🏃, or;
+2. Shorten your list of places 🥱🥱
 ---
 
 ## Bon Voyage🛫🛫🛫! 
