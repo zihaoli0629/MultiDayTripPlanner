@@ -1,105 +1,104 @@
-from ortools.constraint_solver import pywrapcp
-from ortools.constraint_solver.routing_enums_pb2 import FirstSolutionStrategy
+from ortools.constraint_solver import pywrapcp, routing_enums_pb2
 
-def create_data_model(distance_matrix, num_days, max_distance_per_day):
+
+def create_data_model():
     """Stores the data for the problem."""
     data = {}
-    data['distance_matrix'] = distance_matrix
-    data['num_days'] = num_days
-    data['max_distance_per_day'] = max_distance_per_day
+    # Distance matrix between locations (example, in kilometers).
+    data['distance_matrix'] = [
+        [0, 2, 9, 10, 3],
+        [2, 0, 8, 9, 4],
+        [9, 8, 0, 1, 7],
+        [10, 9, 1, 0, 5],
+        [3, 4, 7, 5, 0],
+    ]
+    data['num_vehicles'] = 3  # 3 days or 3 vehicles
+    data['depot'] = 0  # Start from location 0 (the depot)
+    data['max_visits_per_vehicle'] = 3  # Max places visited per day
+    data['max_travel_distance'] = 30  # Max distance traveled per day (in km)
     return data
 
-def solve_itinerary(data):
-    """Solves the multi-day trip planning problem."""
-    num_locations = len(data['distance_matrix'])
-    num_days = data['num_days']
-    max_distance_per_day = int(data['max_distance_per_day'] * 10) # [W]
+
+def main():
+    """Solves the problem with constraints on daily visits and travel distance."""
+    data = create_data_model()
 
     # Create the routing index manager.
-    manager = pywrapcp.RoutingIndexManager(num_locations, num_days, 0)
+    manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
+                                           data['num_vehicles'], data['depot'])
 
     # Create Routing Model.
     routing = pywrapcp.RoutingModel(manager)
 
-    # Create and register a transit callback.
+    # Create and register a transit callback (distance function).
     def distance_callback(from_index, to_index):
-        """Returns the distance between the two nodes."""
+        # Returns the distance between the two nodes.
         from_node = manager.IndexToNode(from_index)
         to_node = manager.IndexToNode(to_index)
-        return int(data['distance_matrix'][from_node][to_node] * 10) # [W]
+        return data['distance_matrix'][from_node][to_node]
 
     transit_callback_index = routing.RegisterTransitCallback(distance_callback)
 
-    # Define cost of each arc.
+    # Define cost of each arc (distance).
     routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
 
-    # Add distance constraint for each day.
-    dimension_name = 'Distance'
+    # Add Dimension to limit the number of stops per vehicle.
+    dimension_name_visits = 'Visits'
+    routing.AddConstantDimension(
+        1,  # Add 1 for each location visited.
+        data['max_visits_per_vehicle'],  # Maximum visits per day.
+        True,  # Start cumul at zero.
+        dimension_name_visits
+    )
+    visits_dimension = routing.GetDimensionOrDie(dimension_name_visits)
+
+    # Add Dimension to limit the travel distance per vehicle.
+    dimension_name_distance = 'Distance'
     routing.AddDimension(
         transit_callback_index,
         0,  # No slack
-        max_distance_per_day,  # Maximum distance per day
-        True,  # Start cumul to zero
-        dimension_name)
-    distance_dimension = routing.GetDimensionOrDie(dimension_name)
-    distance_dimension.SetGlobalSpanCostCoefficient(100)
+        data['max_travel_distance'],  # Maximum distance per day.
+        True,  # Start cumul at zero.
+        dimension_name_distance
+    )
+    distance_dimension = routing.GetDimensionOrDie(dimension_name_distance)
 
-    # Setting first solution heuristic.
+    # Set search parameters.
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    search_parameters.first_solution_strategy = FirstSolutionStrategy.PATH_CHEAPEST_ARC
+    search_parameters.first_solution_strategy = (
+        routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
 
     # Solve the problem.
     solution = routing.SolveWithParameters(search_parameters)
 
-    # Parse the solution.
+    # Print solution.
     if solution:
-        return parse_solution(manager, routing, solution, num_days)
-    else:
-        print("No solution found. Please set a bigger maximum distance per day, or reduce the destination list. ") 
+        print_solution(manager, routing, solution, visits_dimension, distance_dimension)
 
-def parse_solution(manager, routing, solution, num_days):
-    """Parses the solution into a readable format."""
-    routes = []
-    for day in range(num_days):
-        index = routing.Start(day)
+
+def print_solution(manager, routing, solution, visits_dimension, distance_dimension):
+    """Prints the solution on the console."""
+    total_distance = 0
+    for vehicle_id in range(manager.GetNumberOfVehicles()):
+        index = routing.Start(vehicle_id)
+        route_distance = 0
         route = []
         while not routing.IsEnd(index):
-            node_index = manager.IndexToNode(index)
-            route.append(node_index)
+            node = manager.IndexToNode(index)
+            route.append(node)
+            # Get cumulative distance and visits for debugging
+            distance_cumul = solution.Value(distance_dimension.CumulVar(index))
+            visits_cumul = solution.Value(visits_dimension.CumulVar(index))
+            print(f"Node {node} (Cumul Distance: {distance_cumul}, Cumul Visits: {visits_cumul})")
+            previous_index = index
             index = solution.Value(routing.NextVar(index))
-        route.append(0)  # Return to the hotel
-        routes.append(route)
-    return routes
+            route_distance += routing.GetArcCostForVehicle(previous_index, index, vehicle_id)
+        route.append(manager.IndexToNode(index))
+        print(f"Route for vehicle {vehicle_id}: {route}")
+        print(f"Distance of the route: {route_distance} km")
+        total_distance += route_distance
+    print(f"Total distance of all routes: {total_distance} km")
 
-def main():
-    # Example distance matrix (0-th row/column represents the hotel)
-    # distance_matrix = [
-    #     [0, 10, 7, 7, 3.3],
-    #     [11, 0, 5, 3, 10],
-    #     [20, 15, 0, 10, 20],
-    #     [20, 25, 10, 0, 15],
-    #     [20, 20, 20, 15, 0],
-    # ]
-    distance_matrix = [
-        [0, 10.4384, 7.174, 7.2779, 3.1147], 
-        [10.937299999999999, 0, 5.5374, 3.625, 10.3047], 
-        [7.815, 5.3372, 0, 2.5076, 7.182300000000001], 
-        [7.753100000000001, 3.1604, 2.3503000000000003, 0, 7.1205], 
-        [3.4558, 10.1965, 6.9321, 7.0361, 0]
-        ]
 
-    num_days = 4
-    max_distance_per_day = 25
-
-    data = create_data_model(distance_matrix, num_days, max_distance_per_day)
-    solution = solve_itinerary(data)
-
-    # Print the solution
-    for day, route in enumerate(solution):
-        print(f"Day {day + 1}: {' -> '.join(map(str, route))}")
-        dist = 0
-        for i in range(len(route) - 1):
-            dist += distance_matrix[route[i]][route[i+1]]
-        print(f"Total distance for day {day} is {dist}")
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

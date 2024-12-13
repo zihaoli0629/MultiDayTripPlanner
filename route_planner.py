@@ -77,7 +77,7 @@ def create_distance_matrix(coordinates,places):
     return distance_matrix
 
 
-def create_data_model(places, num_days, max_distance_per_day, api_key):
+def create_data_model(places, num_days, max_distance_per_day, max_place_number, api_key):
     client = openrouteservice.Client(key=api_key)
     coordinates = fetch_coordinates(places, api_key, client)
     distance_matrix = create_distance_matrix(coordinates, places)
@@ -86,14 +86,16 @@ def create_data_model(places, num_days, max_distance_per_day, api_key):
     data['distance_matrix'] = distance_matrix
     data['num_days'] = num_days
     data['max_distance_per_day'] = max_distance_per_day
+    data['max_place_number'] = max_place_number
     return data
 
-def solve_itinerary(data: dict, places: list, scale_factor = 10, penalty = 0):
+def solve_itinerary(data: dict, places: list, scale_factor = 10):
     """Solves the multi-day trip planning problem."""
     num_locations = len(data['distance_matrix'])
     num_days = data['num_days']
     max_distance_per_day = int(data['max_distance_per_day'] * scale_factor) # scale by 10 to to maintain accuracy
-
+    max_place_number = int(data['max_place_number'])
+    
     # Create the routing index manager.
     manager = pywrapcp.RoutingIndexManager(num_locations, num_days, 0)
 
@@ -101,11 +103,11 @@ def solve_itinerary(data: dict, places: list, scale_factor = 10, penalty = 0):
     routing = pywrapcp.RoutingModel(manager)
     
     # Create and register a transit callback.
-    def distance_callback(from_index, to_index, penalty = penalty):
+    def distance_callback(from_index, to_index):
         """Returns the distance between the two nodes."""
         from_node = manager.IndexToNode(from_index)
         to_node = manager.IndexToNode(to_index)
-        return int((data['distance_matrix'][from_node][to_node] + penalty) * scale_factor)  # scale by 10 to maintain accuracy
+        return int(data['distance_matrix'][from_node][to_node] * scale_factor)  # scale by 10 to maintain accuracy
 
     transit_callback_index = routing.RegisterTransitCallback(distance_callback)
 
@@ -122,6 +124,17 @@ def solve_itinerary(data: dict, places: list, scale_factor = 10, penalty = 0):
         dimension_name)
     distance_dimension = routing.GetDimensionOrDie(dimension_name)
     distance_dimension.SetGlobalSpanCostCoefficient(100)
+
+    # Add Dimension to limit the number of stops per vehicle.
+    dimension_name_visits = 'Visits'
+    routing.AddConstantDimension(
+        1,  # Add 1 for each location visited.
+        max_place_number,  # Maximum visits per day.
+        True,  # Start cumul at zero.
+        dimension_name_visits
+    )
+    visits_dimension = routing.GetDimensionOrDie(dimension_name_visits)
+
 
     # Setting first solution heuristic.
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
@@ -169,10 +182,11 @@ if __name__ == "__main__":
                     ]
     num_days = 4 # Specify the number of depots = days
     max_distance_per_day = 30 # total budget 
-    penalty = 2 # penalize multiple visits on the same day
+    max_place_number = 4
+    # penalize multiple visits on the same day
     try:
-        data = create_data_model(place_names, num_days, max_distance_per_day, api_key)
-        solution = solve_itinerary(data, place_names, penalty = penalty)
+        data = create_data_model(place_names, num_days, max_distance_per_day, max_place_number, api_key)
+        solution = solve_itinerary(data, place_names)
         if solution:
             for day, sol in enumerate(solution):
                 route, route_index = sol[0], sol[1]
