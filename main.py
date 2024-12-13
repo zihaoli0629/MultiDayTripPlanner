@@ -65,6 +65,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-    # # generate a map in .html file
-    # visualize_routes(daily_routes, output_folder="./plan")
-    # print("Route maps have been saved to ./plan.")
