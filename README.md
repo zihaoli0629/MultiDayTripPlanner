@@ -69,6 +69,7 @@ Day 4 has been saved to ./plan/day_4_route.html
 - If the program can not find a solution, you can either:
 1. Be more energetic by tuning up the `max_distance_per_day` and `max_place_number` 🏃‍♀️🏃, or;
 2. Shorten your list of places 🥱🥱
+- We use the OpenRouteService because it's almost free and convenient. However, it suffers from inaccuracy in many cases (e.g. locating the Metropolitan Museum of NYC in Japan). If this happens in your case, try to change the input to a nearby location or use an accurate address instead, e.g.  `1000 5th Ave, New York` instead of `The Metropolitan Museum of Art, New York` . This should work for most cases!
 ---
 
 ## Bon Voyage🛫🛫🛫! 
